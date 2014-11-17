@@ -1,6 +1,7 @@
 
 build:
-	gcc -g -I ../htslib/htslib htslib_tell.c ../htslib/libhts.a -lz -o htslib_tell
+	gcc -g -I ../htslib/htslib htslib_read_tell.c ../htslib/libhts.a -lz -o htslib_read_tell
+	gcc -g -I ../htslib/htslib htslib_itr_tell.c  ../htslib/libhts.a -lz -o htslib_itr_tell
 
 clean:
-	-rm -rf *~ htslib_tell htslib_tell.dSYM
+	-rm -rf *~ htslib_itr_tell htslib_read_tell *.dSYM

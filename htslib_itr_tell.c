@@ -1,6 +1,6 @@
 //
 // Can we get the offset of the first alignment within a range?
-// The answer seems to be "no".
+// The answer seems to be "no".  The offset
 //
 
 
@@ -35,13 +35,11 @@ int main(int argc, char *argv[])
 
     // enumerate....
     offset = bgzf_tell(sf->fp.bgzf);
-    printf("Pre-enumeration offset: 0x%-16llx\n", offset);
-
     while (bam_itr_next(sf, iter, b) >= 0)
     {
-        offset = bgzf_tell(sf->fp.bgzf);
         int32_t pos = b->core.pos;
         printf("0x%-16llx %d\n", offset, pos);
+        offset = bgzf_tell(sf->fp.bgzf);
     }
 
     return 0;
