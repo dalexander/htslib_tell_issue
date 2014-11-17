@@ -1,0 +1,47 @@
+Can we get the offset of the first alignment within a range?
+
+The answer seems to be "no".  Building the iterator (=sam_itr_queryi=)
+does not seek, and the first time you use advance the iterator
+(=bam_itr_next=), you are already past the first read.
+
+
+Here are the offsets of the first reads in the file, along with their
+=[tStart, tEnd)= spans:
+
+#+begin_src sh :results output :exports both :cache yes
+./htslib_read_tell bam_mapping.bam | head -10
+#+end_src
+
+#+RESULTS[42d729a36eb2cca2afa3f0e29c4368acb3d4b55b]:
+#+begin_example
+0x2390000               0       471
+0x2391d38               302     1019
+0x2393275               675     1026
+0x2393c78               2168    2326
+0x23941d3               2170    2397
+0x23949a8               3572    5015   # This is the first read in our query window
+0x2397209               4506    6125
+0x239a0e2               4507    5860
+0x239c73e               4592    5203
+0x239d92b               4658    5011
+#+end_example
+
+Now here's what happens when we try to query the range =[5000, 6000)=
+
+#+begin_src sh :results output :exports both :cache yes
+./htslib_itr_tell bam_mapping.bam
+#+end_src
+
+#+RESULTS[dbc566df424a2a721ebc5917e95e8486b37271b3]:
+#+begin_example
+0x2390000               3572     5015   # Note incorrect offset here, from pre-seek
+0x2397209               4506     6125
+0x239a0e2               4507     5860
+0x239c73e               4592     5203
+0x239d92b               4658     5011
+0x239e3ba               4842     5215
+0x239ef0c               4903     5380
+0x537e0000              5135     5388
+0x537e07da              5426     7039
+0x537e353a              5942     6134
+#+end_example

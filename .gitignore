@@ -1,0 +1,3 @@
+*.dSYM
+/htslib_read_tell
+/htslib_itr_tell

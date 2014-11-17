@@ -21,7 +21,8 @@ int main(int argc, char *argv[])
         if (bam_read1(sf->fp.bgzf, b) > 0)
         {
             int32_t pos = b->core.pos;
-            printf("0x%-16llx %d\n", offset, pos);
+            int32_t endpos = bam_endpos(b);
+            printf("0x%-16llx\t%d\t%d\n", offset, pos, endpos);
         } else {
             break;
         }
